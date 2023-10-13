@@ -9,11 +9,11 @@ server:
   config:
     repositories: |
       - type: git
-        url: https://github.com/kurtburak/argocd.git
+        url: https://github.com/sustainablescot/argocd.git
       - name: argo-helm
         type: helm
         url: https://argoproj.github.io/argo-helm
-  additionalApplications: 
+  additionalApplications:
     - name: argocd
       namespace: argocd
       destination:
@@ -24,14 +24,14 @@ server:
         helm:
           version: v3
           valueFiles:
-          - values.yaml
-          - ../values-override.yaml
+            - values.yaml
+            - ../values-override.yaml
         path: argocd-install/argo-cd
-        repoURL: https://github.com/kurtburak/argocd.git
+        repoURL: https://github.com/sustainablescot/argocd.git
         targetRevision: HEAD
       syncPolicy:
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
     - name: argocd-apps
       namespace: argocd
       destination:
@@ -40,7 +40,7 @@ server:
       project: argocd
       source:
         path: argocd-apps
-        repoURL: https://github.com/kurtburak/argocd.git
+        repoURL: https://github.com/sustainablescot/argocd.git
         targetRevision: HEAD
         directory:
           recurse: true
@@ -57,7 +57,7 @@ server:
       project: argocd
       source:
         path: argocd-appprojects
-        repoURL: https://github.com/kurtburak/argocd.git
+        repoURL: https://github.com/sustainablescot/argocd.git
         targetRevision: HEAD
         directory:
           recurse: true
@@ -66,19 +66,19 @@ server:
         automated:
           selfHeal: true
           prune: true
-  additionalProjects: 
-  - name: argocd
-    namespace: argocd
-    additionalLabels: {}
-    additionalAnnotations: {}
-    description: Argocd Project
-    sourceRepos:
-    - '*'
-    destinations:
-    - namespace: argocd
-      server: https://kubernetes.default.svc
-    clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-    orphanedResources:
-      warn: false
+  additionalProjects:
+    - name: argocd
+      namespace: argocd
+      additionalLabels: {}
+      additionalAnnotations: {}
+      description: Argocd Project
+      sourceRepos:
+        - "*"
+      destinations:
+        - namespace: argocd
+          server: https://kubernetes.default.svc
+      clusterResourceWhitelist:
+        - group: "*"
+          kind: "*"
+      orphanedResources:
+        warn: false
